@@ -1,10 +1,10 @@
 # Tavaroiden hallintajärjestelmä
 Sovelluksella voi hallita tavaroiden luokittelujärjestelmää, johon voidaan tallentaa tavaroiden sijaintipaikkoja. Järjestelmällä voidaan käsitellä myös tavaroiden luokitteluun ja sijaintiin liittyviä tehtäviä. Jokainen käyttäjä on peruskäyttäjä tai ylläpitäjä.
 
-Järjestelmän toimintaan liittyvät tiedot:
-- kategoriat - Määrittelee mihin kategorioihin tavarat jaetaan. Kategoriat voivat sisältää alakategorioita, muodostaen puumaisen rakenteen. Esim. _kierteelliset - ruuvit - kateruuvit_.
-- paikat - Fyysisiä paikkoja joihin tavaroita on mahdollista sijoittaa. Paikat voivat sisältää osinaan toisia paikkoja. Esim. _kiinteistö - rakennus - rakennuksen osa - huone - kaappi_.
-- tavaroiden sijainnit - Kertoo missä paikoissa jonkin kategorian tavaroita on.
+Järjestelmän toimintaan liittyvät termit, joita käytetään tässä dokumentissa:
+- **kategoriat** - Määrittelee mihin kategorioihin tavarat jaetaan. Kategoriat voivat sisältää alakategorioita, muodostaen puumaisen rakenteen. Esim. _kierteelliset - ruuvit - kateruuvit_.
+- **paikat** - Fyysisiä paikkoja joihin tavaroita on mahdollista sijoittaa. Paikat voivat sisältää osinaan toisia paikkoja. Esim. _kiinteistö - rakennus - rakennuksen osa - huone - kaappi_.
+- **tavaroiden sijainnit** - Kertoo missä paikoissa jonkin kategorian tavaroita on.
 
 Sovelluksen ominaisuuksia:
 - Käyttäjä voi kirjautua sisään ja ulos sekä luoda uuden tunnuksen.
