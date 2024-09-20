@@ -10,7 +10,7 @@ Sovelluksen ominaisuuksia:
 - Käyttäjä voi kirjautua sisään ja ulos sekä luoda uuden tunnuksen.
 - Käyttäjä voi hakea merkkijonoa. Sovellus näyttää tavaroiden kategoriat, paikat ja tavaroiden sijainnit, joista annettu merkkijono löytyy.
 - Käyttäjä voi tallentaa järjestelmään tavaroihin liittyvän tehtävän. Käyttäjä voi valita kategorian, paikan tai tavaran sijainnin, johon tehtävä liittyy, mutta se ei ole pakollista. Käyttäjälle tarjotaan myös mahdollisuus valita jokin usein käytetty toimenpide, joka määrittelee tehtävän tyypin. Käyttäjä voi luoda myös vapaamuotoisen tehtäväviestin.
-  - Usein käytettyjä toimenpiteitä ovat esimerkiksi: tavaran sijaintitiedustelu, kysely mihin kategoriaan tavara kuuluu, kategorian jakaminen, kategorian muutos, virheellinen sijainti ja suurempi tilan tarve.
+  - Usein käytettyjä toimenpiteitä ovat esimerkiksi: tavaran sijainnin tiedustelu, kysely mihin kategoriaan tavara kuuluu, kategorian jakaminen, kategorian muutos, virheellinen sijainti ja suurempi tilan tarve.
 - Käyttäjä voi nähdä luomansa tehtävät luokiteltuna käsittelemättömiin ja käsiteltyihin.
 - Ylläpitäjä voi lisätä, poistaa ja muuttaa kategorioita, paikkoja ja tavaroiden sijainteja.
 - Ylläpitäjä voi merkitä tehtävän käsitellyksi ja lisätä siihen kommentin, joka näkyy tehtävän lisänneelle käyttäjälle.
