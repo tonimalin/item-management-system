@@ -1,0 +1,7 @@
+Kategorioiden määrä: {{ count }}
+<hr>
+{% for category in categories %}
+{{ category.category }}
+<hr>
+{% endfor %}
+<a href="/new">Lisää kategoria</a>
