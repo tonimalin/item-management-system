@@ -1,6 +1,7 @@
 # Tavaroiden hallintajärjestelmä
 ## Sovelluksen tilanne
 Sovelluksella voi katsella luotuja kategorioita ja päätasolle voi luoda uusia kategorioita.
+Järjestelmää voi testata osoitteessa https://item-management-system.fly.dev/
 ## Tavoitteet
 Sovelluksella voi hallita tavaroiden luokittelujärjestelmää, johon voidaan tallentaa tavaroiden sijaintipaikkoja. Järjestelmällä voidaan käsitellä myös tavaroiden luokitteluun ja sijaintiin liittyviä tehtäviä. Jokainen käyttäjä on peruskäyttäjä tai ylläpitäjä.
 

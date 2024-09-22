@@ -13,6 +13,6 @@ RUN pip3 install -r requirements.txt
 
 COPY . .
 
-EXPOSE 5000  # Update to 5000 to match fly.toml
+EXPOSE 5000
 
-CMD ["gunicorn", "-b", "0.0.0.0:5000", "app:app"]  # Update Gunicorn to bind to port 5000
+CMD ["gunicorn", "-b", "0.0.0.0:5000", "app:app"]
