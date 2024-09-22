@@ -6,7 +6,6 @@ from os import getenv
 from sqlalchemy.sql import text
 
 app = Flask(__name__)
-#app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql:///tmalin"
 app.config["SQLALCHEMY_DATABASE_URI"] = getenv("DATABASE_URL")
 db = SQLAlchemy(app)
 
