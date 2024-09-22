@@ -1,7 +1,8 @@
 Kategorioiden määrä: {{ count }}
 <hr>
-{% for category in categories %}
-{{ category.category }}
-<hr>
+<ul>
+{% for path in categories %}
+<li>{{ path }}</li>
 {% endfor %}
+</ul>
 <a href="/new">Lisää kategoria</a>
