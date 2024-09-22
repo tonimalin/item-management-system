@@ -1,4 +1,7 @@
 # Tavaroiden hallintajärjestelmä
+## Sovelluksen tilanne
+Sovelluksella voi katsella luotuja kategorioita ja päätasolle voi luoda uusia kategorioita.
+## Tavoitteet
 Sovelluksella voi hallita tavaroiden luokittelujärjestelmää, johon voidaan tallentaa tavaroiden sijaintipaikkoja. Järjestelmällä voidaan käsitellä myös tavaroiden luokitteluun ja sijaintiin liittyviä tehtäviä. Jokainen käyttäjä on peruskäyttäjä tai ylläpitäjä.
 
 Järjestelmän toimintaan liittyvät termit, joita käytetään tässä dokumentissa:
