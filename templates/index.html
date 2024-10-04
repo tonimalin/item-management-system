@@ -1,8 +1,12 @@
 Kategorioiden määrä: {{ count }}
 <hr>
 <ul>
-{% for path in categories %}
-<li>{{ path }}</li>
+{% for category in categories %}
+    <li>
+        {{ category[1] }}
+        <a href="{{ url_for('add_subcategory', category_id=category[0], category_path=category[1]) }}">Lisää alakategoria</a>
+
+    </li>
 {% endfor %}
 </ul>
 <a href="/new">Lisää kategoria</a>

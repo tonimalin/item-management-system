@@ -1,7 +1,6 @@
 <form action="/send" method="POST">
-    Kategoria: <br>
-    <textarea name="category" rows="1" cols="80"></textarea>
+    <label for="category">Lisättävän pääkategorian nimi:</label>
     <br>
-    <input type="submit" value="Lähetä">
-    </form>
-    
+    <input type="text" id="category" name="category" required>
+    <button type="submit">Lisää</button>
+</form>
