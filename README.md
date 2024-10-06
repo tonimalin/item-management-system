@@ -1,8 +1,9 @@
 # Tavaroiden hallintajärjestelmä
 
 ## Sovelluksen tilanne
-Sovelluksella voi katsella luotuja kategorioita ja päätasolle voi luoda uusia kategorioita.
-Järjestelmää voi testata osoitteessa https://item-management-system.fly.dev/ (ei taida toimia tällä hetkellä)
+Sovelluksella voi katsella luotuja kategorioita ja sillä voi luoda uusia kategorioita. Uudet kategoriat voidaan luoda päätasolle tai aiempien kategorioiden alikategorioiksi. Samat operaatiot voidaan tehdä myös paikoille. Sovellus ei tee vielä minkäänlaisia tarkistuksia syötteiden suhteen.
+
+Järjestelmää voi testata osoitteessa https://item-management-system.fly.dev/
 
 ## Käynnistysohjeet paikallisen version käyttämiseen
 Kloonaa tämä repositorio omalle koneellesi ja siirry sen juurikansioon. Luo kansioon .env-tiedosto ja määritä sen sisältö seuraavanlaiseksi:
@@ -14,9 +15,13 @@ $ python3 -m venv venv
 $ source venv/bin/activate
 $ pip install -r ./requirements.txt
 ```
+Luo psql-tulkissa uusi tietokanta
+```
+create database tietokannan-nimi;
+```
 Määritä vielä tietokannan skeema komennolla
 ```
-$ psql < schema.sql
+$ psql -d tietokannan-nimi < schema.sql
 ```
 Nyt voit käynnistää sovelluksen komennolla
 ```
