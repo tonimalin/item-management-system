@@ -1,4 +1,5 @@
-Kategorioiden määrä: {{ count }}
+<h1>Tavaroiden kategoriat</h1>
+Kategorioiden määrä: {{ category_count }}
 <hr>
 <ul>
 {% for category in categories %}
@@ -9,4 +10,18 @@ Kategorioiden määrä: {{ count }}
     </li>
 {% endfor %}
 </ul>
-<a href="/new">Lisää kategoria</a>
+<a href="/new_category">Lisää kategoria</a>
+
+<h1>Tavaroiden säilytyspaikat</h1>
+Paikkojen määrä: {{ location_count }}
+<hr>
+<ul>
+{% for location in locations %}
+    <li>
+        {{ location[1] }}
+        <a href="{{ url_for('add_sublocation', location_id=location[0], location_path=location[1]) }}">Lisää paikan osa</a>
+
+    </li>
+{% endfor %}
+</ul>
+<a href="/new_location">Lisää paikka</a>

@@ -14,22 +14,50 @@ db = SQLAlchemy(app)
 
 @app.route("/")
 def index():
+
+    # fetch categories from database
     result = db.session.execute(text("SELECT id, category, parent FROM categories"))
     categories = result.fetchall()
-    paths = build_trees_and_paths(categories)
-    return render_template("index.html", count=len(paths), categories=paths) 
+    category_paths = build_trees_and_paths(categories)
+
+    # fetch locations from database
+    result = db.session.execute(text("SELECT id, location, parent FROM locations"))
+    locations = result.fetchall()
+    location_paths = build_trees_and_paths(locations)
+
+    return render_template(
+        "index.html",
+        category_count=len(category_paths),
+        categories=category_paths,
+        location_count=len(location_paths),
+        locations=location_paths
+    ) 
 
 
-@app.route("/new")
-def new():
-    return render_template("new.html")
+@app.route("/new_category")
+def new_category():
+    return render_template("new_category.html")
 
 
-@app.route("/send", methods=["POST"])
-def send():
+@app.route("/new_location")
+def new_location():
+    return render_template("new_location.html")
+
+
+@app.route("/add_category", methods=["POST"])
+def add_category():
     category = request.form["category"]
     sql = text("INSERT INTO categories (category) VALUES (:category)")
     db.session.execute(sql, {"category":category})
+    db.session.commit()
+    return redirect("/")
+
+
+@app.route("/add_location", methods=["POST"])
+def add_location():
+    location = request.form["location"]
+    sql = text("INSERT INTO locations (location) VALUES (:location)")
+    db.session.execute(sql, {"location":location})
     db.session.commit()
     return redirect("/")
 
@@ -47,6 +75,21 @@ def add_subcategory(category_id):
         return redirect(url_for('index'))
     
     return render_template('add_subcategory.html', category_id=category_id, category_path=category_path)
+
+
+@app.route('/add_sublocation/<int:location_id>', methods=['GET', 'POST'])
+def add_sublocation(location_id):
+    location_path = request.args.get('location_path')
+    location_path = unquote(location_path)
+
+    if request.method == 'POST':
+        new_sublocation = request.form['new_sublocation']
+        sql = text("INSERT INTO locations (location, parent) VALUES (:new_sublocation, :location_id)")
+        db.session.execute(sql, {"new_sublocation":new_sublocation, "location_id":location_id})
+        db.session.commit()
+        return redirect(url_for('index'))
+    
+    return render_template('add_sublocation.html', location_id=location_id, location_path=location_path)
 
 
 def build_trees_and_paths(parent_list):
@@ -79,7 +122,7 @@ def build_trees_and_paths(parent_list):
         category_paths.append(category_path)
     
     # Sort paths alphabetically
-    category_paths.sort(key = lambda x: x[1])
+    category_paths.sort(key = lambda x: x[1].lower())
     print('\nPaths:')
     for p in category_paths:
         print(p)
