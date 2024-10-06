@@ -1,23 +1,20 @@
-from anytree import Node, RenderTree
 from flask import redirect, render_template, request, url_for
 from sqlalchemy.sql import text
 from urllib.parse import unquote
 
+from data_structures import build_paths_and_trees
 from app import app
-from db import db
+import db
+
 
 @app.route("/")
 def index():
 
-    # fetch categories from database
-    result = db.session.execute(text("SELECT id, category, parent FROM categories"))
-    categories = result.fetchall()
-    category_paths = build_trees_and_paths(categories)
+    categories = db.get_categories()
+    category_paths = build_paths_and_trees(categories)
 
-    # fetch locations from database
-    result = db.session.execute(text("SELECT id, location, parent FROM locations"))
-    locations = result.fetchall()
-    location_paths = build_trees_and_paths(locations)
+    locations = db.get_locations()
+    location_paths = build_paths_and_trees(locations)
 
     return render_template(
         "index.html",
@@ -41,18 +38,14 @@ def new_location():
 @app.route("/add_category", methods=["POST"])
 def add_category():
     category = request.form["category"]
-    sql = text("INSERT INTO categories (category) VALUES (:category)")
-    db.session.execute(sql, {"category":category})
-    db.session.commit()
+    db.add_category(category)
     return redirect("/")
 
 
 @app.route("/add_location", methods=["POST"])
 def add_location():
     location = request.form["location"]
-    sql = text("INSERT INTO locations (location) VALUES (:location)")
-    db.session.execute(sql, {"location":location})
-    db.session.commit()
+    db.add_location(location)
     return redirect("/")
 
 
@@ -63,9 +56,7 @@ def add_subcategory(category_id):
 
     if request.method == 'POST':
         new_subcategory = request.form['new_subcategory']
-        sql = text("INSERT INTO categories (category, parent) VALUES (:new_subcategory, :category_id)")
-        db.session.execute(sql, {"new_subcategory":new_subcategory, "category_id":category_id})
-        db.session.commit()
+        db.add_subcategory(new_subcategory, category_id)
         return redirect(url_for('index'))
     
     return render_template('add_subcategory.html', category_id=category_id, category_path=category_path)
@@ -78,46 +69,7 @@ def add_sublocation(location_id):
 
     if request.method == 'POST':
         new_sublocation = request.form['new_sublocation']
-        sql = text("INSERT INTO locations (location, parent) VALUES (:new_sublocation, :location_id)")
-        db.session.execute(sql, {"new_sublocation":new_sublocation, "location_id":location_id})
-        db.session.commit()
+        db.add_sublocation(new_sublocation, location_id)
         return redirect(url_for('index'))
     
     return render_template('add_sublocation.html', location_id=location_id, location_path=location_path)
-
-
-def build_trees_and_paths(parent_list):
-    print("polkujen generointi")
-    nodes = {}  # Dictionary to store nodes by id
-
-    for r in parent_list:
-        print(r)
-
-    # First pass: create nodes
-    for id, name, parent_id in parent_list:
-        nodes[id] = Node(name, id=id)
-
-    # Second pass: attach parent-child relationships
-    for id, name, parent_id in parent_list:
-        if parent_id is not None:
-            nodes[id].parent = nodes[parent_id]
-
-    # print the tree structure
-    roots = [node for node in nodes.values() if node.is_root]
-    for root in roots:
-        for pre, fill, node in RenderTree(root):
-            print(f"{pre}{node.name} ({node.id})")
-
-    # Build a list of category paths from root to each node
-    category_paths = []
-    for node in nodes.values():
-        path = ": ".join([ancestor.name for ancestor in node.path])
-        category_path = [node.id, path]
-        category_paths.append(category_path)
-    
-    # Sort paths alphabetically
-    category_paths.sort(key = lambda x: x[1].lower())
-    print('\nPaths:')
-    for p in category_paths:
-        print(p)
-    return category_paths
