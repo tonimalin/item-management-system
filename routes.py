@@ -1,4 +1,4 @@
-from flask import redirect, render_template, request, url_for
+from flask import redirect, render_template, request, session, url_for
 from sqlalchemy.sql import text
 from urllib.parse import unquote
 
@@ -9,7 +9,26 @@ import db
 
 @app.route("/")
 def index():
+    return render_template("index.html")
 
+
+@app.route("/login", methods=["POST"])
+def login():
+    username = request.form["username"]
+    password = request.form["password"]
+    # TODO: check username and password
+    session["username"] = username
+    return redirect("/results")
+
+
+@app.route("/logout")
+def logout():
+    del session["username"]
+    return redirect("/")
+
+
+@app.route("/results")
+def results():
     categories = db.get_categories()
     category_paths = build_paths_and_trees(categories)
 
@@ -17,7 +36,7 @@ def index():
     location_paths = build_paths_and_trees(locations)
 
     return render_template(
-        "index.html",
+        "results.html",
         category_count=len(category_paths),
         categories=category_paths,
         location_count=len(location_paths),
@@ -39,14 +58,14 @@ def new_location():
 def add_category():
     category = request.form["category"]
     db.add_category(category)
-    return redirect("/")
+    return redirect("/results")
 
 
 @app.route("/add_location", methods=["POST"])
 def add_location():
     location = request.form["location"]
     db.add_location(location)
-    return redirect("/")
+    return redirect("/results")
 
 
 @app.route('/add_subcategory/<int:category_id>', methods=['GET', 'POST'])
@@ -57,7 +76,7 @@ def add_subcategory(category_id):
     if request.method == 'POST':
         new_subcategory = request.form['new_subcategory']
         db.add_subcategory(new_subcategory, category_id)
-        return redirect(url_for('index'))
+        return redirect(url_for('results'))
     
     return render_template('add_subcategory.html', category_id=category_id, category_path=category_path)
 
@@ -70,6 +89,6 @@ def add_sublocation(location_id):
     if request.method == 'POST':
         new_sublocation = request.form['new_sublocation']
         db.add_sublocation(new_sublocation, location_id)
-        return redirect(url_for('index'))
+        return redirect(url_for('results'))
     
     return render_template('add_sublocation.html', location_id=location_id, location_path=location_path)

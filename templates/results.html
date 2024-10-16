@@ -1,0 +1,27 @@
+<h1>Tavaroiden kategoriat</h1>
+Kategorioiden määrä: {{ category_count }}
+<hr>
+<ul>
+{% for category in categories %}
+    <li>
+        {{ category[1] }}
+        <a href="{{ url_for('add_subcategory', category_id=category[0], category_path=category[1]) }}">Lisää alakategoria</a>
+
+    </li>
+{% endfor %}
+</ul>
+<a href="/new_category">Lisää kategoria</a>
+
+<h1>Tavaroiden säilytyspaikat</h1>
+Paikkojen määrä: {{ location_count }}
+<hr>
+<ul>
+{% for location in locations %}
+    <li>
+        {{ location[1] }}
+        <a href="{{ url_for('add_sublocation', location_id=location[0], location_path=location[1]) }}">Lisää paikan osa</a>
+
+    </li>
+{% endfor %}
+</ul>
+<a href="/new_location">Lisää paikka</a>
