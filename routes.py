@@ -16,15 +16,35 @@ def index():
 def login():
     username = request.form["username"]
     password = request.form["password"]
-    # TODO: check username and password
-    session["username"] = username
-    return redirect("/results")
+    if db.check_password(username, password):
+        session["username"] = username
+        return redirect("/results")
+    else:
+        return('Virheellinen tunnus tai salasana!')
 
 
 @app.route("/logout")
 def logout():
     del session["username"]
     return redirect("/")
+
+
+@app.route("/new_user")
+def new_user():
+    return render_template("new_user.html")
+
+
+@app.route("/add_user", methods=["POST"])
+def add_user():
+    username = request.form["username"]
+    password = request.form["password"]
+    if db.check_password(username, password) == None:
+        if password == '':
+            return("Salasana ei saa olla tyhjä!")
+        db.add_user(username, password, 'user')
+        return(f"Luotiin käyttäjä: {username}")
+    else:
+        return(f"Tunnus <b>{username}</b> on jo käytössä!")
 
 
 @app.route("/results")

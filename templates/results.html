@@ -1,3 +1,7 @@
+{% if session.username %}
+<p>Olet kirjautunut nimellä {{ session.username }}</p>
+<a href="/logout">Kirjaudu ulos</a>
+{% endif %}
 <h1>Tavaroiden kategoriat</h1>
 Kategorioiden määrä: {{ category_count }}
 <hr>

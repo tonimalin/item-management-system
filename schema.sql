@@ -9,3 +9,9 @@ id SERIAL PRIMARY KEY,
 location TEXT NOT NULL,
 parent INTEGER REFERENCES locations(id) ON DELETE SET NULL
 );
+
+CREATE TABLE users (
+id SERIAL PRIMARY KEY,
+username TEXT NOT NULL,
+password TEXT NOT NULL,
+role TEXT NOT NULL);

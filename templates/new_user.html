@@ -1,13 +1,13 @@
+<h1>Uuden tunnuksen luominen</h1>
 {% if session.username %}
-<p>Olet kirjautunut nimellä {{ session.username }}</p>
+<p>Olet kirjautunut tunnuksella {{ session.username }}</p>
 <a href="/logout">Kirjaudu ulos</a>
 {% else %}
-<form action="/login" method="POST">
+<form action="/add_user" method="POST">
 <p>Tunnus:<br>
 <input type="text" name="username"></p>
 <p>Salasana:<br>
 <input type="password" name="password"></p>
-<input type="submit" value="Kirjaudu">
+<input type="submit" value="Lisää">
 </form>
-<a href="/new_user">Luo uusi tunnus</a>
 {% endif %}
