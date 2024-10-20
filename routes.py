@@ -65,6 +65,7 @@ def results():
     #     then general filter is disabled
 
     if request.method == 'GET':
+
         # General filter
         if 'general' in request.args:
             session['general'] = request.args.get('general')
@@ -78,26 +79,37 @@ def results():
             session['category'] = request.args.get('category')
             session.pop('general', None)
             session['active_filter'] = 'category'
-            filter_strings = request.args.get('category')
 
         # Location filter
         elif 'location' in request.args:
             session['location'] = request.args.get('location')
             session.pop('general', None)
             session['active_filter'] = 'location'
-            filter_string = request.args.get('location')
 
         # Item Location filter
         elif 'item_location' in request.args:
             session['item_location'] = request.args.get('item_location')
             session.pop('general', None)
             session['active_filter'] = 'item_location'
-            filter_string = request.args.get('item_location')
+
+        if 'submit' in request.args:
+            if request.args.get('submit') == 'Tyhjennä kaikki suodattimet':
+                session.pop('general', None)
+                session.pop('category', None)
+                session.pop('location', None)
+                session.pop('item_location', None)
+            if request.args.get('submit') == 'Tyhjennä kategoriasuodatin':
+                session.pop('category', None)
+            if request.args.get('submit') == 'Tyhjennä paikkasuodatin':
+                session.pop('location', None)
+            if request.args.get('submit') == 'Tyhjennä tavaran sijaintisuodatin':
+                session.pop('item_location', None)
+                
 
     # strings that are used to filter categories, locations and item locations
     filter_strings = 3 * ['']
     if 'general' in session:
-            filter_strings = 3 * session['general']
+            filter_strings = 3 * [session['general']]
     else:
         for i,l in enumerate(['category', 'location', 'item_location']):
             if l in session:

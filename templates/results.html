@@ -1,13 +1,14 @@
 <style>
     table, th, td {
       border: 1px solid black;
-      border-collapse: collapse; /* Ensures borders don't double up */
+      border-collapse: collapse;
     }
     th, td {
       padding: 4px;
     }
 </style>
 
+<!-- Script activates filter field that was last used -->
 <script>
     window.onload = function() {
         let activeFilter = "{{ session.get('active_filter') }}";
@@ -30,14 +31,16 @@
 <p>Näytetään hakusanaa vastaavat kategoriat, paikat ja tavaroiden sijainnit.</p>
 <form method="GET" action="/results" name="general_filter">
     Hakusana: <input type="text" name="general" value="{{ session.get('general', '') }}" placeholder="Yleinen suodatin">
-    <input type="submit" value="Suodata">
+    <input type="submit" name="submit" value="Suodata">
+    <input type="submit" name="submit" value="Tyhjennä kaikki suodattimet">
 </form>
 
 
 <h1>Tavaroiden kategoriat</h1>
 <form method="GET" action="/results" name="category_filter">
     <input type="text" name="category" value="{{ session.get('category', '') }}" placeholder="Kategoriasuodatin">
-    <input type="submit" value="Suodata">
+    <input type="submit" name="submit" value="Suodata">
+    <input type="submit" name="submit" value="Tyhjennä kategoriasuodatin">
 </form>
 Kategorioiden määrä: {{ category_count }}
 <table>
@@ -68,7 +71,8 @@ Kategorioiden määrä: {{ category_count }}
 <h1>Tavaroiden säilytyspaikat</h1>
 <form method="GET" action="/results" name="location_filter">
     <input type="text" name="location" value="{{ session.get('location', '') }}" placeholder="Paikkasuodatin">
-    <input type="submit" value="Suodata">
+    <input type="submit" name="submit" value="Suodata">
+    <input type="submit" name="submit" value="Tyhjennä paikkasuodatin">
 </form>
 Paikkojen määrä: {{ location_count }}
 <table>
@@ -98,7 +102,8 @@ Paikkojen määrä: {{ location_count }}
 <h1>Tavaroiden sijainnit</h1>
 <form method="GET" action="/results" name="item_location_filter">
     <input type="text" name="item_location" value="{{ session.get('item_location', '') }}" placeholder="Tavaroiden sijaintisuodatin">
-    <input type="submit" value="Suodata">
+    <input type="submit" name="submit" value="Suodata">
+    <input type="submit" name="submit" value="Tyhjennä tavaran sijaintisuodatin">
 </form>
 Sijaintien määrä: {{ item_location_count }}
 <ul>
