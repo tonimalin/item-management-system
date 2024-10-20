@@ -2,6 +2,13 @@
 <p>Olet kirjautunut nimellä {{ session.username }}</p>
 <a href="/logout">Kirjaudu ulos</a>
 {% endif %}
+
+<h1>Suodatus</h1>
+<form action="/results" method="GET">
+    Hakusana: <input type="text" name="query" value="{{ current_query }}" autofocus> <input type="submit" value="Suodata">
+</form>
+    
+
 <h1>Tavaroiden kategoriat</h1>
 Kategorioiden määrä: {{ category_count }}
 <hr>
@@ -16,6 +23,7 @@ Kategorioiden määrä: {{ category_count }}
 </ul>
 <a href="/new_category">Lisää kategoria</a>
 
+
 <h1>Tavaroiden säilytyspaikat</h1>
 Paikkojen määrä: {{ location_count }}
 <hr>
@@ -29,3 +37,17 @@ Paikkojen määrä: {{ location_count }}
 {% endfor %}
 </ul>
 <a href="/new_location">Lisää paikka</a>
+
+
+<h1>Tavaroiden sijainnit</h1>
+Sijaintien määrä: {{ item_location_count }}
+<hr>
+<ul>
+{% for item_location in item_locations %}
+    <li>
+        {{ item_location[1] }}
+
+    </li>
+{% endfor %}
+</ul>
+<a href="/new_item_location">Lisää tavaran sijainti</a>

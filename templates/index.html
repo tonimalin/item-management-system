@@ -1,13 +1,14 @@
 {% if session.username %}
-<p>Olet kirjautunut nimellä {{ session.username }}</p>
-<a href="/logout">Kirjaudu ulos</a>
+    <p>Olet kirjautunut nimellä {{ session.username }}</p>
+    <p><a href="/logout">Kirjaudu ulos</a></p>
+    <p><a href="/results">Haku / tulokset</a></p>
 {% else %}
-<form action="/login" method="POST">
-<p>Tunnus:<br>
-<input type="text" name="username"></p>
-<p>Salasana:<br>
-<input type="password" name="password"></p>
-<input type="submit" value="Kirjaudu">
-</form>
-<a href="/new_user">Luo uusi tunnus</a>
+    <form action="/login" method="POST">
+    <p>Tunnus:<br>
+    <input type="text" name="username"></p>
+    <p>Salasana:<br>
+    <input type="password" name="password"></p>
+    <input type="submit" value="Kirjaudu">
+    </form>
+    <a href="/new_user">Luo uusi tunnus</a>
 {% endif %}

@@ -39,8 +39,27 @@ def check_password(username, password):
 # Categories and locations
 
 
-def get_categories():
-    result = db.session.execute(text("SELECT id, category, parent FROM categories"))
+# def get_categories():
+#     result = db.session.execute(text("SELECT id, category, parent FROM categories"))
+#     return result.fetchall()
+
+def get_categories(id=None, category_substring=None):
+
+    # "WHERE true" allows flexible addition of AND clauses
+    sql = "SELECT id, category, parent FROM categories WHERE true"
+    params = {}
+    
+    # Add filtering by id if provided
+    if id:
+        sql += " AND id = :id"
+        params["id"] = id
+    
+    # Add filtering by category substring if provided
+    if category_substring:
+        sql += " AND category ILIKE :category_substring"
+        params["category_substring"] = f"%{category_substring}%"
+
+    result = db.session.execute(text(sql), params)
     return result.fetchall()
 
 
@@ -73,3 +92,19 @@ def add_sublocation(location_name, parent_id):
     db.session.commit()
 
 
+
+
+# Item Locations
+
+
+def add_item_location(category_id=None, location_id=None, notes=None):
+
+    # category or location of items must be known
+    if category_id == None and location_id == None:
+        return None
+    
+    # tarkistetaan, että category ja location on olemassa
+    # tarkistetaan, että category tai location on annettu
+        # miten virhe käsitellään?
+            # palauttaa None jos ei lisätty mitään ja id:n jos lisättiin?
+    pass

@@ -7,9 +7,9 @@ from app import app
 import db
 
 
-@app.route("/")
-def index():
-    return render_template("index.html")
+
+
+# User account routes
 
 
 @app.route("/login", methods=["POST"])
@@ -47,20 +47,39 @@ def add_user():
         return(f"Tunnus <b>{username}</b> on jo käytössä!")
 
 
+
+
+# Other routes
+
+
+@app.route("/")
+def index():
+    return render_template("index.html")
+
+
 @app.route("/results")
 def results():
+    query = request.args.get("query", "").strip()
+    print('query:', query)
+
     categories = db.get_categories()
     category_paths = build_paths_and_trees(categories)
-
     locations = db.get_locations()
     location_paths = build_paths_and_trees(locations)
+
+    if query:
+        category_paths = [path for path in category_paths if query.lower() in path[1].lower()]
+        location_paths = [path for path in location_paths if query.lower() in path[1].lower()]
+    else:
+        print('ei suodatusta')
 
     return render_template(
         "results.html",
         category_count=len(category_paths),
         categories=category_paths,
         location_count=len(location_paths),
-        locations=location_paths
+        locations=location_paths,
+        current_query = query
     ) 
 
 
@@ -72,6 +91,11 @@ def new_category():
 @app.route("/new_location")
 def new_location():
     return render_template("new_location.html")
+
+
+@app.route("/new_item_location")
+def new_item_location():
+    return render_template("new_item_location.html")
 
 
 @app.route("/add_category", methods=["POST"])

@@ -2,11 +2,11 @@ from anytree import Node, RenderTree
 
 
 def build_paths_and_trees(parent_list):
-    print("polkujen generointi")
     nodes = {}  # Dictionary to store nodes by id
 
-    for r in parent_list:
-        print(r)
+    # print("Generating paths:")
+    # for r in parent_list:
+    #     print(r)
 
     # First pass: create nodes
     for id, name, parent_id in parent_list:
@@ -18,10 +18,10 @@ def build_paths_and_trees(parent_list):
             nodes[id].parent = nodes[parent_id]
 
     # print the tree structure
-    roots = [node for node in nodes.values() if node.is_root]
-    for root in roots:
-        for pre, fill, node in RenderTree(root):
-            print(f"{pre}{node.name} ({node.id})")
+    # roots = [node for node in nodes.values() if node.is_root]
+    # for root in roots:
+    #     for pre, fill, node in RenderTree(root):
+    #         print(f"{pre}{node.name} ({node.id})")
 
     # Build a list of category paths from root to each node
     category_paths = []
@@ -32,7 +32,7 @@ def build_paths_and_trees(parent_list):
     
     # Sort paths alphabetically
     category_paths.sort(key = lambda x: x[1].lower())
-    print('\nPaths:')
-    for p in category_paths:
-        print(p)
+    # print('\nPaths:')
+    # for p in category_paths:
+    #     print(p)
     return category_paths
