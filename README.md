@@ -1,7 +1,11 @@
 # Tavaroiden hallintajärjestelmä
 
 ## Sovelluksen tilanne
-Sovelluksella voi katsella luotuja kategorioita ja sillä voi luoda uusia kategorioita. Uudet kategoriat voidaan luoda päätasolle tai aiempien kategorioiden alikategorioiksi. Samat operaatiot voidaan tehdä myös paikoille. Sovellus ei tee vielä minkäänlaisia tarkistuksia syötteiden suhteen.
+Käyttäjä voi luoda tunnuksen ja kirjautua sillä sisään järjestelmään. Järjestelmästä voi kirjautua myös ulos.
+
+Sovelluksella voi katsella luotuja kategorioita ja sillä voi luoda uusia kategorioita. Uudet kategoriat voidaan luoda päätasolle tai aiempien kategorioiden alikategorioiksi. Samat operaatiot voidaan tehdä myös paikoille. Tulosnäkymässä nähdään kategoriat ja paikat. Kumpaakin ryhmää voidaan suodattaa erikseen annetun merkkijonon perusteella. Suodatus on mahdollista tehdä myös kaikille ryhmille yhtäaikaa.
+
+Sovellus ei tee minkäänlaisia tarkistuksia syötteiden suhteen.
 
 ## Käynnistysohjeet paikallisen version käyttämiseen
 Kloonaa tämä repositorio omalle koneellesi ja siirry sen juurikansioon. Luo kansioon .env-tiedosto ja määritä sen sisältö seuraavanlaiseksi:
