@@ -1,3 +1,25 @@
+<style>
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse; /* Ensures borders don't double up */
+    }
+    th, td {
+      padding: 4px;
+    }
+</style>
+
+<script>
+    window.onload = function() {
+        let activeFilter = "{{ session.get('active_filter') }}";
+        if (activeFilter) {
+            let inputField = document.getElementsByName(activeFilter + '_filter')[0];
+            if (inputField) {
+                inputField.querySelector('input[type="text"]').focus();
+            }
+        }
+    };
+</script>
+
 {% if session.username %}
 <p>Olet kirjautunut nimellä {{ session.username }}</p>
 <a href="/logout">Kirjaudu ulos</a>
@@ -14,49 +36,71 @@
 
 <h1>Tavaroiden kategoriat</h1>
 <form method="GET" action="/results" name="category_filter">
-    <input type="text" name="category" value="{{ session.get('category', '') }}" placeholder="Category Filter">
-    <input type="submit" value="Filter">
+    <input type="text" name="category" value="{{ session.get('category', '') }}" placeholder="Kategoriasuodatin">
+    <input type="submit" value="Suodata">
 </form>
 Kategorioiden määrä: {{ category_count }}
-<hr>
-<ul>
-{% for category in categories %}
-    <li>
-        {{ category[1] }}
-        <a href="{{ url_for('add_subcategory', category_id=category[0], category_path=category[1]) }}">Lisää alakategoria</a>
-
-    </li>
-{% endfor %}
-</ul>
+<table>
+    <thead>
+        <tr>
+            <th>id</th>
+            <th>Kategoria</th>
+            <th>Lisää alakategoria</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for category in categories %}
+        <tr>
+            <td>{{ category[0] }}</td>
+            <td>{{ category[1] }}</td>
+            <td>
+                <a href="{{ url_for('add_subcategory', category_id=category[0], category_path=category[1]) }}">
+                    <button type="button">Lisää alakategoria</button>
+                </a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
 <a href="/new_category">Lisää kategoria</a>
 
 
 <h1>Tavaroiden säilytyspaikat</h1>
 <form method="GET" action="/results" name="location_filter">
-    <input type="text" name="location" value="{{ session.get('location', '') }}" placeholder="Location Filter">
-    <input type="submit" value="Filter">
+    <input type="text" name="location" value="{{ session.get('location', '') }}" placeholder="Paikkasuodatin">
+    <input type="submit" value="Suodata">
 </form>
 Paikkojen määrä: {{ location_count }}
-<hr>
-<ul>
-{% for location in locations %}
-    <li>
-        {{ location[1] }}
-        <a href="{{ url_for('add_sublocation', location_id=location[0], location_path=location[1]) }}">Lisää paikan osa</a>
-
-    </li>
-{% endfor %}
-</ul>
-<a href="/new_location">Lisää paikka</a>
+<table>
+    <thead>
+        <tr>
+            <th>id</th>
+            <th>Paikka</th>
+            <th>Lisää paikan osa</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for location in locations %}
+        <tr>
+            <td>{{ location[0] }}</td>
+            <td>{{ location[1] }}</td>
+            <td>
+                <a href="{{ url_for('add_sublocation', location_id=location[0], location_path=location[1]) }}">
+                    <button type="button">Lisää paikan osa</button>
+                </a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table><a href="/new_location">Lisää paikka</a>
 
 
 <h1>Tavaroiden sijainnit</h1>
 <form method="GET" action="/results" name="item_location_filter">
-    <input type="text" name="item_location" value="{{ session.get('item_location', '') }}" placeholder="Item Location Filter">
-    <input type="submit" value="Filter">
+    <input type="text" name="item_location" value="{{ session.get('item_location', '') }}" placeholder="Tavaroiden sijaintisuodatin">
+    <input type="submit" value="Suodata">
 </form>
 Sijaintien määrä: {{ item_location_count }}
-<hr>
 <ul>
 {% for item_location in item_locations %}
     <li>
