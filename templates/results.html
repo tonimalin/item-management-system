@@ -3,13 +3,20 @@
 <a href="/logout">Kirjaudu ulos</a>
 {% endif %}
 
-<h1>Suodatus</h1>
-<form action="/results" method="GET">
-    Hakusana: <input type="text" name="query" value="{{ current_query }}" autofocus> <input type="submit" value="Suodata">
+
+<h1>Yleinen suodatus</h1>
+<p>Näytetään hakusanaa vastaavat kategoriat, paikat ja tavaroiden sijainnit.</p>
+<form method="GET" action="/results" name="general_filter">
+    Hakusana: <input type="text" name="general" value="{{ session.get('general', '') }}" placeholder="Yleinen suodatin">
+    <input type="submit" value="Suodata">
 </form>
-    
+
 
 <h1>Tavaroiden kategoriat</h1>
+<form method="GET" action="/results" name="category_filter">
+    <input type="text" name="category" value="{{ session.get('category', '') }}" placeholder="Category Filter">
+    <input type="submit" value="Filter">
+</form>
 Kategorioiden määrä: {{ category_count }}
 <hr>
 <ul>
@@ -25,6 +32,10 @@ Kategorioiden määrä: {{ category_count }}
 
 
 <h1>Tavaroiden säilytyspaikat</h1>
+<form method="GET" action="/results" name="location_filter">
+    <input type="text" name="location" value="{{ session.get('location', '') }}" placeholder="Location Filter">
+    <input type="submit" value="Filter">
+</form>
 Paikkojen määrä: {{ location_count }}
 <hr>
 <ul>
@@ -40,6 +51,10 @@ Paikkojen määrä: {{ location_count }}
 
 
 <h1>Tavaroiden sijainnit</h1>
+<form method="GET" action="/results" name="item_location_filter">
+    <input type="text" name="item_location" value="{{ session.get('item_location', '') }}" placeholder="Item Location Filter">
+    <input type="submit" value="Filter">
+</form>
 Sijaintien määrä: {{ item_location_count }}
 <hr>
 <ul>

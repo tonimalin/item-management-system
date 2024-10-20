@@ -59,19 +59,67 @@ def index():
 
 @app.route("/results")
 def results():
-    query = request.args.get("query", "").strip()
-    print('query:', query)
+
+    # if general filter is activated then others filters are disabled
+    # if category, location or item location filter is activated
+    #     then general filter is disabled
+
+    if request.method == 'GET':
+        # General filter
+        if 'general' in request.args:
+            session['general'] = request.args.get('general')
+            session.pop('category', None)
+            session.pop('location', None)
+            session.pop('item_location', None)
+            session['active_filter'] = 'general'
+        
+        # Category filter
+        elif 'category' in request.args:
+            session['category'] = request.args.get('category')
+            session.pop('general', None)
+            session['active_filter'] = 'category'
+            filter_strings = request.args.get('category')
+
+        # Location filter
+        elif 'location' in request.args:
+            session['location'] = request.args.get('location')
+            session.pop('general', None)
+            session['active_filter'] = 'location'
+            filter_string = request.args.get('location')
+
+        # Item Location filter
+        elif 'item_location' in request.args:
+            session['item_location'] = request.args.get('item_location')
+            session.pop('general', None)
+            session['active_filter'] = 'item_location'
+            filter_string = request.args.get('item_location')
+
+    # strings that are used to filter categories, locations and item locations
+    filter_strings = 3 * ['']
+    if 'general' in session:
+            filter_strings = 3 * session['general']
+    else:
+        for i,l in enumerate(['category', 'location', 'item_location']):
+            if l in session:
+                filter_strings[i] = session[l]
 
     categories = db.get_categories()
     category_paths = build_paths_and_trees(categories)
     locations = db.get_locations()
     location_paths = build_paths_and_trees(locations)
 
-    if query:
-        category_paths = [path for path in category_paths if query.lower() in path[1].lower()]
-        location_paths = [path for path in location_paths if query.lower() in path[1].lower()]
-    else:
-        print('ei suodatusta')
+    if 'category' in session or 'general' in session:
+        category_paths = [
+            path for path in category_paths
+                if filter_strings[0].lower() in path[1].lower()
+        ]
+    if 'location' in session or 'general' in session:
+        location_paths = [
+            path for path in location_paths
+                if filter_strings[1].lower() in path[1].lower()
+        ]
+    if 'item_location' in session:
+        pass
 
     return render_template(
         "results.html",
@@ -79,7 +127,6 @@ def results():
         categories=category_paths,
         location_count=len(location_paths),
         locations=location_paths,
-        current_query = query
     ) 
 
 
